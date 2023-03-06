@@ -31,6 +31,7 @@ def pd_indexing(x, d, dilation, batch_index, ch_index):
     # get past index (assume reflect padding)
     idx_base = torch.arange(0, T, dtype=torch.long, device=x.device).reshape(1, 1, T)
     idxP = (idx_base - dilations).abs() % T
+    idxP = (batch_index, ch_index, idxP)
 
     # get future index (assume reflect padding)
     idxF = idx_base + dilations
