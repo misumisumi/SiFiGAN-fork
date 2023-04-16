@@ -66,13 +66,13 @@ $ sifigan-decode generator=sifigan data=namine_ritsu out_dir=exp/sifigan checkpo
 
 ```bash
 # WORLD analysis + Neural vocoder synthesis
-$ sifigan-anasyn generator=sifigan in_dir=your_own_input_wav_dir out_dir=your_own_output_wav_dir stats=pretrained_sifigan/namine_ritsu_train_no_dev.joblib checkpoint_path=pretrained_sifigan/checkpoint-400000steps.pkl f0_factor=1.0
+$ sifigan-anasyn generator=sifigan in_dir=your_own_input_wav_dir out_dir=your_own_output_wav_dir stats=pretrained_sifigan/namine_ritsu_train_no_dev.joblib checkpoint_path=pretrained_sifigan/checkpoint-400000steps.pkl f0_factors=[1.0]
 ```
 
 I provide a pretrained SiFiGAN model [HERE](https://www.dropbox.com/s/akofngycxxz1dg5/pretrained_sifigan.tar.gz?dl=0) which is trained on the Namine Ritsu corpus in the same training manner described in the paper.
 You can download and place it in your own directory. Then set the appropriate path to the pretrained model and the command should work.
 
-However, since the Namine Ritsu corpus includes a single female Japanese singer, there is a possibility that the model would not work well especially for make singers.
+However, since the Namine Ritsu corpus includes a single female Japanese singer, there is a possibility that the model would not work well especially for male singers.
 I am planning to publish another pretrained model trained on larger dataset including many speakers.
 
 ### Monitor training progress
