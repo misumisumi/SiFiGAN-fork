@@ -66,14 +66,37 @@ $ sifigan-decode generator=sifigan data=namine_ritsu out_dir=exp/sifigan checkpo
 
 ```bash
 # WORLD analysis + Neural vocoder synthesis
-$ sifigan-anasyn generator=sifigan in_dir=your_own_input_wav_dir out_dir=your_own_output_wav_dir stats=pretrained_sifigan/namine_ritsu_train_no_dev.joblib checkpoint_path=pretrained_sifigan/checkpoint-400000steps.pkl f0_factor=1.0
+$ sifigan-anasyn generator=sifigan in_dir=your_own_input_wav_dir out_dir=your_own_output_wav_dir stats=pretrained_sifigan/namine_ritsu_train_no_dev.joblib checkpoint_path=pretrained_sifigan/checkpoint-400000steps.pkl f0_factors=[1.0]
 ```
 
-I provide a pretrained SiFiGAN model [HERE](https://www.dropbox.com/s/akofngycxxz1dg5/pretrained_sifigan.tar.gz?dl=0) which is trained on the Namine Ritsu corpus in the same training manner described in the paper.
-You can download and place it in your own directory. Then set the appropriate path to the pretrained model and the command should work.
+### Pretrained model
 
-However, since the Namine Ritsu corpus includes a single female Japanese singer, there is a possibility that the model would not work well especially for make singers.
-I am planning to publish another pretrained model trained on larger dataset including many speakers.
+~~I provide a pretrained SiFiGAN model [HERE](https://www.dropbox.com/s/akofngycxxz1dg5/pretrained_sifigan.tar.gz?dl=0) which is trained on the Namine Ritsu corpus in the same training manner described in the paper.
+You can download and place it in your own directory. Then set the appropriate path to the pretrained model and the command should work.~~
+
+
+~~However, since the Namine Ritsu corpus includes a single female Japanese singer, there is a possibility that the model would not work well especially for male singers.
+I am planning to publish another pretrained model trained on larger dataset including many speakers.~~
+
+Due to being trained on the code before bug fixes, I have decided to cancel the release of the model trained on the Namine Ritsu database. Instead, a model trained on the following large-scale dataset is available.
+
+A pretrained model on 24 kHz speech + singing dataset is available [HERE](https://drive.google.com/file/d/1uzqTeumvkPQpfdK_D4U41MDL5-s-hs0l/view?usp=sharing). We used train-clean-100 and train-clean-360 in [LibriTTS-R](https://google.github.io/df-conformer/librittsr/), and [NUS-48E](https://www.smcnus.org/wp-content/uploads/2013/09/05-Pub-NUS-48E.pdf) for training.
+Two speakers ADIZ and JLEE in NUS-48E were excluded from the training data for evaluation.
+Also, the wav data of NUS-48E were divided into clips of approximately one second each before the feature extraction step.
+
+A pretrained model on 24 kHz speech + singing datasets is available [HERE](). We used train-clean-100 and train-clean-360 of [LibriTTS-R](https://google.github.io/df-conformer/librittsr/), and [NUS-48E](https://www.smcnus.org/wp-content/uploads/2013/09/05-Pub-NUS-48E.pdf) for training.
+Two speakers, ADIZ and JLEE in NUS-48E, were excluded from the training data for evaluation. Also, the wav data of NUS-48E were divided into clips of approximately one second each before the feature extraction step.
+
+The feature preprocessing and training commands are as follows:
+```bash
+sifigan-extract-features audio=data/scp/libritts_r_clean+nus-48e_train_no_dev.scp minf0=60 maxf0=1000
+sifigan-extract-features audio=data/scp/libritts_r_clean+nus-48e_dev.scp minf0=60 maxf0=1000
+sifigan-extract-features audio=data/scp/libritts_r_clean+nus-48e_eval.scp minf0=60 maxf0=1000
+
+sifigan-compute-statistics feats=data/scp/libritts_r_clean+nus-48e_train_no_dev.list stats=data/stats/libritts_r_clean+nus-48e_train_no_dev.joblib
+
+sifigan-train out_dir=test/sifigan generator=sifigan data=libritts_r_clean+nus-48e train=sifigan_1000k
+```
 
 ### Monitor training progress
 
@@ -85,14 +108,15 @@ $ tensorboard --logdir exp
 If you find the code is helpful, please cite the following article.
 
 ```
-@misc{https://doi.org/10.48550/arxiv.2210.15533,
-    author = {Reo Yoneyama and Yi-Chiao Wu and Tomoki Toda},
-    title = {{Source-Filter HiFi-GAN: Fast and Pitch Controllable High-Fidelity Neural Vocoder}},
-    year = {2022},
-    publisher = {arXiv},
-    url = {https://arxiv.org/abs/2210.15533},
-    doi = {10.48550/ARXIV.2210.15533},
-    copyright = {arXiv.org perpetual, non-exclusive license}
+@INPROCEEDINGS{10095298,
+  author={Yoneyama, Reo and Wu, Yi-Chiao and Toda, Tomoki},
+  booktitle={ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+  title={{Source-Filter HiFi-GAN: Fast and Pitch Controllable High-Fidelity Neural Vocoder}},
+  year={2023},
+  volume={},
+  number={},
+  pages={1-5},
+  doi={10.1109/ICASSP49357.2023.10095298}
 }
 ```
 
