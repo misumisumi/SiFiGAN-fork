@@ -80,11 +80,7 @@ I am planning to publish another pretrained model trained on larger dataset incl
 
 Due to being trained on the code before bug fixes, I have decided to cancel the release of the model trained on the Namine Ritsu database. Instead, a model trained on the following large-scale dataset is available.
 
-A pretrained model on 24 kHz speech + singing dataset is available [HERE](https://drive.google.com/file/d/1uzqTeumvkPQpfdK_D4U41MDL5-s-hs0l/view?usp=sharing). We used train-clean-100 and train-clean-360 in [LibriTTS-R](https://google.github.io/df-conformer/librittsr/), and [NUS-48E](https://www.smcnus.org/wp-content/uploads/2013/09/05-Pub-NUS-48E.pdf) for training.
-Two speakers ADIZ and JLEE in NUS-48E were excluded from the training data for evaluation.
-Also, the wav data of NUS-48E were divided into clips of approximately one second each before the feature extraction step.
-
-A pretrained model on 24 kHz speech + singing datasets is available [HERE](). We used train-clean-100 and train-clean-360 of [LibriTTS-R](https://google.github.io/df-conformer/librittsr/), and [NUS-48E](https://www.smcnus.org/wp-content/uploads/2013/09/05-Pub-NUS-48E.pdf) for training.
+A pretrained model on 24 kHz speech + singing datasets is available [HERE](https://drive.google.com/file/d/1uzqTeumvkPQpfdK_D4U41MDL5-s-hs0l/view?usp=sharing). We used train-clean-100 and train-clean-360 in [LibriTTS-R](https://google.github.io/df-conformer/librittsr/), and [NUS-48E](https://www.smcnus.org/wp-content/uploads/2013/09/05-Pub-NUS-48E.pdf) for training.
 Two speakers, ADIZ and JLEE in NUS-48E, were excluded from the training data for evaluation. Also, the wav data of NUS-48E were divided into clips of approximately one second each before the feature extraction step.
 
 The feature preprocessing and training commands are as follows:
